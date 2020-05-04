@@ -18,6 +18,7 @@ jupyter = "*"
 matplotlib = "*"
 seaborn = "*"
 sklearn = "*"
+plotly = "*"
 
 [requires]
 python_version = "3.6"
