@@ -3,10 +3,7 @@
 
 # In[3]:
 
-
-import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
 train = pd.read_csv('../data/raw/train.csv',sep=';', decimal = ',')
 train.head()
 
