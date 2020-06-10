@@ -3,12 +3,10 @@ import os, sys
 
 
 def load_dataset(path='../../data/raw/train.csv'):
-    os.chdir(os.path.dirname(sys.argv[0]))
     return pd.read_csv(path)
 
 
 def save_dataset(df, path='../../data/processed/train.csv'):
-    os.chdir(os.path.dirname(sys.argv[0]))
     return df.to_csv(path)
 
 
@@ -135,6 +133,7 @@ def clean(df):
 
 
 if __name__ == "__main__":
+    os.chdir(os.path.dirname(sys.argv[0]))
     train = load_dataset()
     train = clean(train)
     save_dataset(train)
