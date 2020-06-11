@@ -3,11 +3,11 @@ import os, sys
 
 
 def load_dataset(path='../../data/raw/train.csv'):
-    return pd.read_csv(path)
+    return pd.read_csv(path, index_col=0)
 
 
 def save_dataset(df, path='../../data/processed/train.csv'):
-    return df.to_csv(path)
+    return df.to_csv(path, index=False)
 
 
 def clean_rooms(df):
@@ -17,7 +17,6 @@ def clean_rooms(df):
     '''
 
     df['BsmtFullBath'].replace([1, 2, 3], 1, inplace=True)
-    df.rename(columns={'BsmtFullBath': '1 or higher'}, inplace=True)
     df['BsmtCond'].replace(['Fa', 'Po'], 'Below avarage', inplace=True)
     df['GarageQual'].replace(['Ex', 'Gd', 'TA'],
                              "Average/Above Average",
@@ -46,16 +45,27 @@ def clean_mix(df):
     To understand what the cleanning does, please read the notebooks.
     '''
 
+    df['LotConfig'].replace(['FR3', 'FR2'], 'FRX', inplace=True)
+    df['HouseStyle'].replace(['1Story', '1.5Fin', '1.5Unf'],
+                             '<=1.5Story',
+                             inplace=True)
+    df['HouseStyle'].replace(['2Story', '2.5Fin', '2.5Unf'],
+                             '>1.5Story',
+                             inplace=True)
+    df['SaleType'].replace(
+        ['WD', 'COD', 'ConLID', 'CWD', 'ConLw', 'Con', 'Oth'],
+        'Other',
+        inplace=True)
     df['SaleCondition'].replace(
-        ['Abnorml', 'Normal', 'AdjLand', 'Alloca', 'Family'], 'Other')
-    df['MSZoning'].replace(['RH'], 'RM')
-    df.drop('Street', axis=1)
-    df['Alley'].replace(['Grvl Gravel', 'Pave paved'], 'Other')
-    df['LotShape'].replace(['IR1', 'IR2', 'IR3'], 'IR')
-    df.drop('Utilities', axis=1)
-    df['MiscFeature'].replace(['Elev', 'Gar2', 'Othr', 'Shed', 'TenC'],
-                              'Other')
-    df.drop('MiscFeature', axis=1)
+        ['Abnorml', 'Normal', 'AdjLand', 'Alloca', 'Family'],
+        'Other',
+        inplace=True)
+    df['MSZoning'].replace(['RH'], 'RM', inplace=True)
+    df.drop('Street', axis=1, inplace=True)
+    df['Alley'].replace(['Grvl Gravel', 'Pave paved'], 'Other', inplace=True)
+    df['LotShape'].replace(['IR1', 'IR2', 'IR3'], 'IR', inplace=True)
+    df.drop('Utilities', axis=1, inplace=True)
+    df.drop('MiscFeature', axis=1, inplace=True)
 
     return df
 
@@ -71,7 +81,6 @@ def clean_strucute(df):
     df['RoofStyle'].replace(['Flat', 'Gambrel', 'Hip', 'Mansard', 'Shed'],
                             'Other',
                             inplace=True)
-
     df['RoofMatl'].replace(
         ['ClyTile', 'Membran', 'Metal', 'Roll', 'Tar&Grv', 'WdShake'],
         'Other',
@@ -108,8 +117,7 @@ def clean_strucute(df):
     df['Heating'].replace(['Floor', 'Grav', 'Wall', 'OthW'],
                           'Other',
                           inplace=True)
-    df['HeatingQC'].replace(['Fa', 'Po'], 'Below Average', inplace=True)
-    df['HeatingQC'].replace(['Gd', 'TA'], 'Gd/TA', inplace=True)
+    df['HeatingQC'].replace(['Gd', 'TA', 'Fa', 'Po'], 'Below Ex', inplace=True)
     df['Electrical'].replace(['FuseA', 'FuseF', 'FuseP', 'Mix'],
                              'Other',
                              inplace=True)
@@ -117,6 +125,10 @@ def clean_strucute(df):
     df['PavedDrive'].replace(['N', 'P'], 'No/Partial', inplace=True)
     df['PavedDrive'].replace('Y', 'Yes', inplace=True)
     df['Fence'].replace(['GdWo', 'MnWw'], 'Wood/Wire', inplace=True)
+    df['Foundation'].replace(['CBlock', 'BrkTil', 'Wood', 'Slab', 'Stone'],
+                             'Other',
+                             inplace=True)
+    df['ExterQual'].replace(['Fa', 'TA'], 'Fa/TA', inplace=True)
 
     return df
 
