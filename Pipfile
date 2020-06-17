@@ -13,6 +13,8 @@ pandas = "*"
 numpy = "*"
 yapf = "*"
 statsmodels = "*"
+seaborn = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.6"
