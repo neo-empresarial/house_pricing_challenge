@@ -16,7 +16,9 @@ def clean_rooms(df):
     To understand what the cleanning does, please read the notebook 2.1 and 1.1.
     '''
 
-    df['BsmtFullBath'].replace([1, 2, 3], 1, inplace=True)
+    df['TotalBath'] = df['BsmtFullBath'] + df['BsmtHalfBath'] + df['FullBath'] + df['HalfBath']
+    df.drop(columns=['BsmtFullBath', 'BsmtHalfBath', 'FullBath', 'HalfBath'],
+            inplace=True)
     df['BsmtCond'].replace(['Fa', 'Po'], 'Below avarage', inplace=True)
     df['GarageQual'].replace(['Ex', 'Gd', 'TA'],
                              "Average/Above Average",
@@ -24,14 +26,12 @@ def clean_rooms(df):
     df['GarageQual'].replace(['Fa', 'Po'], "Below Average", inplace=True)
     df['BedroomAbvGr'].replace([0, 1, 2], '2 or less', inplace=True)
     df['BedroomAbvGr'].replace([5, 6, 8], '5 or higher', inplace=True)
-    df['FullBath'].replace([0, 1], '1 or less', inplace=True)
     df['BsmtFinType1'].replace(['BLQ', 'LwQ', 'Rec'], 'Others', inplace=True)
     df['BsmtFinType2'].replace(['BLQ', 'LwQ', 'Rec'], 'Others', inplace=True)
     df['GarageCond'].replace(['TA', 'Gd', 'Ex'],
                              'Avarage/Above Avarage',
                              inplace=True)
     df['GarageCond'].replace(['Po', 'Fa'], 'Below Average', inplace=True)
-    df['HalfBath'].replace([1, 2], '1 or higher', inplace=True)
     df['GarageType'].replace(['Detchd', 'CarPort', 'Basment', '2Types'],
                              "Other",
                              inplace=True)
@@ -76,8 +76,6 @@ def clean_strucute(df):
     To understand what the cleanning does, please read the notebooks.
     '''
 
-    df['OverallQual'].replace([1, 2, 3, 4], '4-', inplace=True)
-    df['OverallCond'].replace([6, 7, 8], '6-8', inplace=True)
     df['RoofStyle'].replace(['Flat', 'Gambrel', 'Hip', 'Mansard', 'Shed'],
                             'Other',
                             inplace=True)
