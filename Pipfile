@@ -18,6 +18,8 @@ jupyter = "*"
 matplotlib = "*"
 seaborn = "*"
 sklearn = "*"
+xgboost = "*"
+lightgbm = "*"
 
 [requires]
 python_version = "3.6"
