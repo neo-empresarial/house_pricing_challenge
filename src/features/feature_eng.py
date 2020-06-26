@@ -1,5 +1,6 @@
 import pandas as pd
-import os, sys
+import os
+import sys
 
 
 def load_dataset(path='../../data/processed/train.csv'):
@@ -55,7 +56,7 @@ def feature_selection(df):
         'BldgType', 'Functional', 'MoSold', 'MiscVal', 'LowQualFinSF',
         'KitchenAbvGr'
     ],
-            inplace=True)
+        inplace=True)
 
     return df
 
@@ -64,4 +65,5 @@ if __name__ == "__main__":
     os.chdir(os.path.dirname(sys.argv[0]))
     df = load_dataset()
     df = feature_selection(df)
-    save_dataset(df)
+    save_dataset(
+        df, path='../../data/processed/train_with_feature_selection.csv')
