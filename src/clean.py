@@ -35,7 +35,7 @@ def clean_rooms(df):
     return df
 
 
-def clean_mix(df):
+def clean_mix(df, test=False):
     '''
     This function get the dataset and clean all columns related with the mix data.
     To understand what the cleanning does, please read the notebooks.
@@ -64,10 +64,22 @@ def clean_mix(df):
     df.drop('MiscFeature', axis=1, inplace=True)
     df['MasVnrArea'].fillna(0, inplace=True)
 
+    return df
+
+
+def clean_outliers(df):
     df = df.drop(df[(df['GrLivArea'] > 4000) &
                     (df['SalePrice'] < 200000)].index)
     df = df[df['LotArea'] < 100000]
     df = df[df['LotFrontage'] < 200]
+
+    return df
+
+
+def fill_test(df):
+    str_cols = df.columns[df.dtypes == object]
+    df[str_cols] = df[str_cols].fillna(df[str_cols].mode().iloc[0])
+    df.fillna(0, inplace=True)
     return df
 
 
@@ -132,7 +144,7 @@ def clean_strucute(df):
     return df
 
 
-def clean(df):
+def clean(df, to_test=False):
     '''
     Script to clean a entiry dataset.
     '''
@@ -140,6 +152,10 @@ def clean(df):
     df = clean_mix(df)
     df = clean_rooms(df)
     df = clean_strucute(df)
+    if not to_test:
+        df = clean_outliers(df)
+    else:
+        df = fill_test(df)
     return df
 
 
