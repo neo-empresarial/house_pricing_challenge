@@ -3,11 +3,11 @@ import os
 import sys
 
 
-def load_dataset(path='../../data/raw/train.csv'):
+def load_dataset(path='../data/raw/train.csv'):
     return pd.read_csv(path, index_col=0)
 
 
-def save_dataset(df, path='../../data/processed/train_clean.csv'):
+def save_dataset(df, path='../data/processed/train_clean.csv'):
     return df.to_csv(path, index=False)
 
 
@@ -62,6 +62,7 @@ def clean_mix(df):
     df['LotShape'].replace(['IR1', 'IR2', 'IR3'], 'IR', inplace=True)
     df.drop('Utilities', axis=1, inplace=True)
     df.drop('MiscFeature', axis=1, inplace=True)
+    df['MasVnrArea'].fillna(0, inplace=True)
 
     df = df.drop(df[(df['GrLivArea'] > 4000) &
                     (df['SalePrice'] < 200000)].index)

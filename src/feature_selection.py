@@ -3,11 +3,11 @@ import os
 import sys
 
 
-def load_dataset(path='../../data/processed/train.csv'):
+def load_dataset(path='../data/processed/train_clean.csv'):
     return pd.read_csv(path)
 
 
-def save_dataset(df, path='../../data/processed/df_after_feature_eng.csv'):
+def save_dataset(df, path='../data/processed/train_selected.csv'):
     return df.to_csv(path, index=False)
 
 
@@ -42,6 +42,8 @@ def feature_selection(df):
         lambda x: 1 if x in ['HighQualMat', 'CemntBd'] else 0)
     df['MasVnrType'].replace(['BrkCmn', 'BrkFace'], 'Brick', inplace=True)
     df['1FamBldg'] = df['BldgType'].apply(lambda x: 1 if x == '1Fam' else 0)
+    df['TotalBath'] = df[['BsmtFullBath', 'BsmtHalfBath',
+                          'FullBath', 'HalfBath', ]].sum(axis=1)
 
     # Drop features
     df.drop(columns=[
@@ -65,5 +67,4 @@ if __name__ == "__main__":
     os.chdir(os.path.dirname(sys.argv[0]))
     df = load_dataset()
     df = feature_selection(df)
-    save_dataset(
-        df, path='../../data/processed/train_with_feature_selection.csv')
+    save_dataset(df)
