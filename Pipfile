@@ -12,6 +12,7 @@ pandas = "*"
 numpy = "*"
 sklearn = "*"
 plotly = "*"
+joblib = "*"
 
 [requires]
 python_version = "3.6"
