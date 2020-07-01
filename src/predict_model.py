@@ -5,6 +5,7 @@ import joblib
 import glob
 import os
 import sys
+from sklearn.impute import SimpleImputer
 
 
 def predict_results(model, df, save_csv=True):
@@ -22,8 +23,9 @@ def load_submission(path='../data/raw/sample_submission.csv'):
 
 
 def preprocessing(df):
-    return pd.get_dummies(df, drop_first=True)
-
+    df = pd.get_dummies(df, drop_first=True)
+    df = SimpleImputer(strategy='median').transform(df)
+    return df
 
 def load_model(filename="../models/1-regression-tree.sav"):
     return joblib.load(filename)
