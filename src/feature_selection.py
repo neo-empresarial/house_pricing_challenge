@@ -29,7 +29,7 @@ def feature_selection(df):
     df['KitchenQual'].replace(['Gd'], '2', inplace=True)
     df['KitchenQual'].replace(['Ex'], '3', inplace=True)
     df['KitchenQual'] = df['KitchenQual'].apply(int)
-    df['MSSubClass'] = df['MSSubClass'].aplly(str)
+    df['MSSubClass'] = df['MSSubClass'].apply(str)
 
     # Create new features
     df['PorchArea'] = df[[
