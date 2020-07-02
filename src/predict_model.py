@@ -1,11 +1,12 @@
 from clean import clean
 from feature_selection import feature_selection
 import pandas as pd
+import numpy as np
+from sklearn.impute import SimpleImputer
 import joblib
 import glob
 import os
 import sys
-from sklearn.impute import SimpleImputer
 
 
 def predict_results(model, df, save_csv=True):
@@ -24,7 +25,7 @@ def load_submission(path='../data/raw/sample_submission.csv'):
 
 def preprocessing(df):
     df = pd.get_dummies(df, drop_first=True)
-    df = SimpleImputer(missing_values=np.NaN, strategy='median').transform(df)
+    df = SimpleImputer(strategy='most_frequent').transform(df)
     return df
 
 def load_model(filename="../models/1-regression-tree.sav"):
