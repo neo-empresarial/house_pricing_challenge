@@ -1,6 +1,6 @@
 from clean import clean
 from feature_selection import feature_selection
-from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 import joblib
 import pandas as pd
 import sys
@@ -13,7 +13,15 @@ def preprocessing_train(df):
 
 def train_model(df):
     X_train, y_train = df.drop(columns=['SalePrice']), df[['SalePrice']]
-    model = DecisionTreeRegressor()
+
+    model = GradientBoostingRegressor(n_estimators=3500,
+                                      learning_rate=0.01,
+                                      max_depth=4,
+                                      max_features='sqrt',
+                                      min_samples_leaf=15,
+                                      min_samples_split=10,
+                                      loss='huber',
+                                      random_state=42)
     model.fit(X_train, y_train)
     return model
 
@@ -24,4 +32,4 @@ if __name__ == "__main__":
     df = clean(df)
     df = feature_selection(df)
     model = train_model(preprocessing_train(df))
-    joblib.dump(model, '../models/1-regression-tree.sav')
+    joblib.dump(model, '../models/2-gradient-boosting.sav')
