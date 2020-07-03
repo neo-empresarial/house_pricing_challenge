@@ -1,12 +1,13 @@
 import pandas as pd
-import os, sys
+import os
+import sys
 
 
-def load_dataset(path='../../data/processed/train.csv'):
+def load_dataset(path='../data/processed/train_clean.csv'):
     return pd.read_csv(path)
 
 
-def save_dataset(df, path='../../data/processed/df_after_feature_eng.csv'):
+def save_dataset(df, path='../data/processed/train_selected.csv'):
     return df.to_csv(path, index=False)
 
 
@@ -28,7 +29,6 @@ def feature_selection(df):
     df['KitchenQual'].replace(['Gd'], '2', inplace=True)
     df['KitchenQual'].replace(['Ex'], '3', inplace=True)
     df['KitchenQual'] = df['KitchenQual'].apply(int)
-    df['MSSubClass'] = df['MSSubClass'].apply(str)
 
     # Create new features
     df['PorchArea'] = df[[
@@ -41,6 +41,8 @@ def feature_selection(df):
         lambda x: 1 if x in ['HighQualMat', 'CemntBd'] else 0)
     df['MasVnrType'].replace(['BrkCmn', 'BrkFace'], 'Brick', inplace=True)
     df['1FamBldg'] = df['BldgType'].apply(lambda x: 1 if x == '1Fam' else 0)
+    df['TotalBath'] = df[['BsmtFullBath', 'BsmtHalfBath',
+                          'FullBath', 'HalfBath', ]].sum(axis=1)
 
     # Drop features
     df.drop(columns=[
@@ -55,7 +57,7 @@ def feature_selection(df):
         'BldgType', 'Functional', 'MoSold', 'MiscVal', 'LowQualFinSF',
         'KitchenAbvGr'
     ],
-            inplace=True)
+        inplace=True)
 
     return df
 

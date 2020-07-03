@@ -5,20 +5,18 @@ verify_ssl = true
 
 [dev-packages]
 pylint = "*"
+autopep8 = "*"
 
 [packages]
-e1839a8 = {editable = true,file = "file:///home/yves/Documents/neo/projects/neo/data_science_challenge"}
-click = "*"
-coverage = "*"
-awscli = "*"
-flake8 = "*"
-Sphinx = "*"
 pandas = "*"
-jupyter = "*"
-matplotlib = "*"
-seaborn = "*"
+numpy = "*"
 sklearn = "*"
 plotly = "*"
+joblib = "*"
+jupyter = "*"
+notebook = "*"
+seaborn = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.6"

@@ -1,12 +1,13 @@
 import pandas as pd
-import os, sys
+import os
+import sys
 
 
-def load_dataset(path='../../data/raw/train.csv'):
+def load_dataset(path='../data/raw/train.csv'):
     return pd.read_csv(path, index_col=0)
 
 
-def save_dataset(df, path='../../data/processed/train.csv'):
+def save_dataset(df, path='../data/processed/train_clean.csv'):
     return df.to_csv(path, index=False)
 
 
@@ -16,22 +17,17 @@ def clean_rooms(df):
     To understand what the cleanning does, please read the notebook 2.1 and 1.1.
     '''
 
-    df['BsmtFullBath'].replace([1, 2, 3], 1, inplace=True)
     df['BsmtCond'].replace(['Fa', 'Po'], 'Below avarage', inplace=True)
     df['GarageQual'].replace(['Ex', 'Gd', 'TA'],
                              "Average/Above Average",
                              inplace=True)
     df['GarageQual'].replace(['Fa', 'Po'], "Below Average", inplace=True)
-    df['BedroomAbvGr'].replace([0, 1, 2], '2 or less', inplace=True)
-    df['BedroomAbvGr'].replace([5, 6, 8], '5 or higher', inplace=True)
-    df['FullBath'].replace([0, 1], '1 or less', inplace=True)
     df['BsmtFinType1'].replace(['BLQ', 'LwQ', 'Rec'], 'Others', inplace=True)
     df['BsmtFinType2'].replace(['BLQ', 'LwQ', 'Rec'], 'Others', inplace=True)
     df['GarageCond'].replace(['TA', 'Gd', 'Ex'],
                              'Avarage/Above Avarage',
                              inplace=True)
     df['GarageCond'].replace(['Po', 'Fa'], 'Below Average', inplace=True)
-    df['HalfBath'].replace([1, 2], '1 or higher', inplace=True)
     df['GarageType'].replace(['Detchd', 'CarPort', 'Basment', '2Types'],
                              "Other",
                              inplace=True)
@@ -39,7 +35,7 @@ def clean_rooms(df):
     return df
 
 
-def clean_mix(df):
+def clean_mix(df, test=False):
     '''
     This function get the dataset and clean all columns related with the mix data.
     To understand what the cleanning does, please read the notebooks.
@@ -66,7 +62,24 @@ def clean_mix(df):
     df['LotShape'].replace(['IR1', 'IR2', 'IR3'], 'IR', inplace=True)
     df.drop('Utilities', axis=1, inplace=True)
     df.drop('MiscFeature', axis=1, inplace=True)
+    df['MasVnrArea'].fillna(0, inplace=True)
 
+    return df
+
+
+def clean_outliers(df):
+    df = df.drop(df[(df['GrLivArea'] > 4000) &
+                    (df['SalePrice'] < 200000)].index)
+    df = df[df['LotArea'] < 100000]
+    df = df[df['LotFrontage'] < 200]
+
+    return df
+
+
+def fill_test(df):
+    str_cols = df.columns[df.dtypes == object]
+    df[str_cols] = df[str_cols].fillna(df[str_cols].mode().iloc[0])
+    df.fillna(0, inplace=True)
     return df
 
 
@@ -76,8 +89,6 @@ def clean_strucute(df):
     To understand what the cleanning does, please read the notebooks.
     '''
 
-    df['OverallQual'].replace([1, 2, 3, 4], '4-', inplace=True)
-    df['OverallCond'].replace([6, 7, 8], '6-8', inplace=True)
     df['RoofStyle'].replace(['Flat', 'Gambrel', 'Hip', 'Mansard', 'Shed'],
                             'Other',
                             inplace=True)
@@ -133,7 +144,7 @@ def clean_strucute(df):
     return df
 
 
-def clean(df):
+def clean(df, to_test=False):
     '''
     Script to clean a entiry dataset.
     '''
@@ -141,6 +152,10 @@ def clean(df):
     df = clean_mix(df)
     df = clean_rooms(df)
     df = clean_strucute(df)
+    if not to_test:
+        df = clean_outliers(df)
+    else:
+        df = fill_test(df)
     return df
 
 
