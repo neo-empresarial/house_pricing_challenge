@@ -1,5 +1,7 @@
 from clean import clean
 from feature_selection import feature_selection
+from sklearn.impute import SimpleImputer
+import numpy as np
 import pandas as pd
 import joblib
 import glob
@@ -22,7 +24,8 @@ def load_submission(path='../data/raw/sample_submission.csv'):
 
 
 def preprocessing(df):
-    return pd.get_dummies(df, drop_first=True)
+    df = pd.get_dummies(df, drop_first=True)
+    return df
 
 
 def load_model(filename="../models/2-gradient-boosting.sav"):
@@ -32,7 +35,6 @@ def load_model(filename="../models/2-gradient-boosting.sav"):
 if __name__ == "__main__":
     os.chdir(os.path.dirname(sys.argv[0]))
     model = load_model()
-
     test = pd.read_csv('../data/raw/test.csv', index_col=0)
     test = clean(test, to_test=True)
     test = feature_selection(test)
