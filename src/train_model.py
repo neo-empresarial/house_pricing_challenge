@@ -2,17 +2,13 @@ from clean import clean
 from feature_selection import feature_selection
 from sklearn.tree import DecisionTreeRegressor
 import joblib
-import numpy as np
 import pandas as pd
-from sklearn.impute import SimpleImputer
 import sys
 import os
 
 
 def preprocessing_train(df):
-    df = pd.get_dummies(df, drop_first=True)
-    df = SimpleImputer(strategy='most_frequent').transform(df)
-    return df
+    return pd.get_dummies(df, drop_first=True)
 
 
 def train_model(df):
