@@ -28,7 +28,7 @@ def preprocessing(df):
     return df
 
 
-def load_model(filename="../models/1-regression-tree.sav"):
+def load_model(filename="../models/2-gradient-boosting.sav"):
     return joblib.load(filename)
 
 
