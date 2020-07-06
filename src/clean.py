@@ -31,7 +31,9 @@ def clean_rooms(df):
     df['GarageType'].replace(['Detchd', 'CarPort', 'Basment', '2Types'],
                              "Other",
                              inplace=True)
-
+    df['BsmtFullBath'].fillna(0, inplace=True)
+    df['BsmtHalfBath'].fillna(0, inplace=True)
+    df['GarageCars'].fillna(0, inplace=True)
     return df
 
 
