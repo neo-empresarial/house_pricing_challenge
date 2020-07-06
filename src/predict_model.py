@@ -1,5 +1,6 @@
 from clean import clean
 from feature_selection import feature_selection
+from sklearn.impute import SimpleImputer
 import numpy as np
 import pandas as pd
 import joblib
