@@ -54,7 +54,7 @@ def feature_selection(df):
         'Fireplaces', 'PoolArea', 'PavedDrive', 'GarageType', 'GarageQual',
         'GarageYrBlt', 'GarageFinish', 'GarageCond', 'GarageArea',
         'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', '3SsnPorch',
-        'ScreenPorch', 'FireplaceQu', 'PoolQC', 'ExterCond',
+        'ScreenPorch', 'FireplaceQu', 'PoolQC',
         'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinSF1',
         'BsmtFinType2', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF',
         'RoofStyle', 'Exterior1st', 'Exterior2nd',
