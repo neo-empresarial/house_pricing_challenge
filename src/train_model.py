@@ -35,4 +35,4 @@ if __name__ == "__main__":
     df = clean(df)
     df = feature_selection(df)
     model = train_model(df)
-    joblib.dump(model, '../models/1-regression-tree.sav')
+    joblib.dump(model, '../models/2-gradient-boosting.sav'')
