@@ -18,6 +18,10 @@ def feature_selection(df):
     df['ExterQual'].replace(['Gd'], '1', inplace=True)
     df['ExterQual'].replace(['Ex'], '2', inplace=True)
     df['ExterQual'] = df['ExterQual'].apply(int)
+    df['ExterCond'].replace(['Below Average'], '0', inplace=True)
+    df['ExterCond'].replace(['TA'], '1', inplace=True)
+    df['ExterCond'].replace(['Gd'], '2', inplace=True)
+    df['ExterCond'].replace(['Ex'], '3', inplace=True)
     df['BsmtQual'].replace(['Fa'], '0', inplace=True)
     df['BsmtQual'].replace(['TA'], '1', inplace=True)
     df['BsmtQual'].replace(['Gd'], '2', inplace=True)
@@ -50,10 +54,10 @@ def feature_selection(df):
         'Fireplaces', 'PoolArea', 'PavedDrive', 'GarageType', 'GarageQual',
         'GarageYrBlt', 'GarageFinish', 'GarageCond', 'GarageArea',
         'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', '3SsnPorch',
-        'ScreenPorch', 'FireplaceQu', 'PoolQC', 'HeatingQC', 'ExterCond',
+        'ScreenPorch', 'FireplaceQu', 'PoolQC', 'ExterCond',
         'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinSF1',
         'BsmtFinType2', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF',
-        'Neighborhood', 'RoofStyle', 'RoofMatl', 'Exterior1st', 'Exterior2nd',
+        'RoofStyle', 'Exterior1st', 'Exterior2nd',
         'BldgType', 'Functional', 'MoSold', 'MiscVal', 'LowQualFinSF',
         'KitchenAbvGr'
     ],
