@@ -133,6 +133,74 @@ def clean_strucute(df):
     return df
 
 
+def kmeans (df):
+    '''
+    Script to organize and clustering the Neighborhood column
+    '''
+    df_k=df[['Neighborhood','SalePrice']]
+    
+    import numpy as np
+    from sklearn.datasets.samples_generator import (make_blobs,
+                                                    make_circles,
+                                                    make_moons)
+    from sklearn.cluster import KMeans, SpectralClustering
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.metrics import silhouette_samples, silhouette_score
+    from warnings import filterwarnings
+    filterwarnings('ignore')
+
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['NAmes'], "0")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['NAme'], "1")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['CollgCr'],"2")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['OldTown'],"3")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['Edwards'],"4")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['Somerst'],"5")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['Gilbert'],"6")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['NridgHt'],"7")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['Sawyer'],"8")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['NWAmes'],"9")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['SawyerW'],"10")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['BrkSide'],"11")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['Crawfor'],"12")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['Mitchel'],"13")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['NoRidge'],"14")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['Timber'],"15")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['IDOTRR'],"16")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['ClearCr'],"17")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['StoneBr'],"18")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['Blmngtn'],"19")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['SWISU'],"20")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['MeadowV'],"21")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['BrDale'],"22")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['Veenker'],"23")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['NPkVill'],"24")
+    df_k['Neighborhood'] = df_k['Neighborhood'].replace(['Blueste'],"25")
+
+    df_k['Neighborhood'] = df_k['Neighborhood'].astype(int)
+
+    X = df_k.iloc[:, 0:2].values
+    kmeans = KMeans(n_clusters = 3, init = 'random')
+
+    kmeans.fit(X)
+    kmeans.cluster_centers_
+    distance = kmeans.fit_transform(X)
+    labels = kmeans.labels_
+    
+    for i in range(1, 11):
+        kmeans = KMeans(n_clusters = i, init = 'random')
+        kmeans.fit(X))
+        wcss.append(kmeans.inertia_)  
+
+    clusters = kmeans.predict(X)
+    clusters
+    kmeans.cluster_centers_
+
+    df['Cluster Neighborhood'] = clusters
+    df.drop('Neighborhood',axis=1)
+
+    return df 
+
+
 def clean(df):
     '''
     Script to clean a entiry dataset.
@@ -141,6 +209,7 @@ def clean(df):
     df = clean_mix(df)
     df = clean_rooms(df)
     df = clean_strucute(df)
+    df = kmeans(df)
     return df
 
 
