@@ -1,6 +1,13 @@
 import pandas as pd
 import os, sys
-
+import numpy as np
+    from sklearn.datasets.samples_generator import (make_blobs,
+                                                    make_circles,
+                                                    make_moons)
+    from sklearn.cluster import KMeans, SpectralClustering
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.metrics import silhouette_samples, silhouette_score
+    from warnings import filterwarnings
 
 def load_dataset(path='../../data/raw/train.csv'):
     return pd.read_csv(path, index_col=0)
@@ -138,15 +145,7 @@ def kmeans (df):
     Script to organize and clustering the Neighborhood column
     '''
     df_k=df[['Neighborhood','SalePrice']]
-    
-    import numpy as np
-    from sklearn.datasets.samples_generator import (make_blobs,
-                                                    make_circles,
-                                                    make_moons)
-    from sklearn.cluster import KMeans, SpectralClustering
-    from sklearn.preprocessing import StandardScaler
-    from sklearn.metrics import silhouette_samples, silhouette_score
-    from warnings import filterwarnings
+
     filterwarnings('ignore')
 
     df_k['Neighborhood'] = df_k['Neighborhood'].replace(['NAmes'], "0")
@@ -203,7 +202,7 @@ def kmeans (df):
 
 def clean(df):
     '''
-    Script to clean a entiry dataset.
+    Script to clean an entire dataset.
     '''
 
     df = clean_mix(df)
