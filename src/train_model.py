@@ -16,8 +16,8 @@ def preprocessing_train(df):
 def train_model(df):
     X_train, y_train = df.drop(columns=['SalePrice']), df[['SalePrice']]
     X_train = preprocessing_train(X_train)
-    model = GradientBoostingRegressor(n_estimators=3500,
-                                      learning_rate=0.01,
+    model = GradientBoostingRegressor(n_estimators=3400,
+                                      learning_rate=0.008,
                                       max_depth=4,
                                       max_features='sqrt',
                                       min_samples_leaf=15,
