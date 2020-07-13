@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+from scipy import stats
 import os
 import sys
 
@@ -41,6 +43,7 @@ def clean_mix(df, test=False):
     To understand what the cleanning does, please read the notebooks.
     '''
 
+    df['MSSubClass'].replace([150], 20, inplace=True)
     df['LotConfig'].replace(['FR3', 'FR2'], 'FRX', inplace=True)
     df['HouseStyle'].replace(['1Story', '1.5Fin', '1.5Unf'],
                              '<=1.5Story',
@@ -68,11 +71,11 @@ def clean_mix(df, test=False):
 
 
 def clean_outliers(df):
-    df = df.drop(df[(df['GrLivArea'] > 4000) &
-                    (df['SalePrice'] < 200000)].index)
-    df = df[df['LotArea'] < 100000]
-    df = df[df['LotFrontage'] < 200]
-
+    z = np.abs(stats.zscore(df['SalePrice']))
+    threshold = 3
+    outliers = np.where(z > threshold)
+    zscore_outliers = outliers[0]
+    df.drop(zscore_outliers)
     return df
 
 
