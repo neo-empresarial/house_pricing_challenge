@@ -31,6 +31,9 @@ def clean_rooms(df):
     df['GarageType'].replace(['Detchd', 'CarPort', 'Basment', '2Types'],
                              "Other",
                              inplace=True)
+    df['BsmtFullBath'].fillna(0, inplace=True)	
+    df['BsmtHalfBath'].fillna(0, inplace=True)	
+    df['GarageCars'].fillna(0, inplace=True)
 
     return df
 
@@ -64,6 +67,7 @@ def clean_mix(df, test=False):
     df.drop('Utilities', axis=1, inplace=True)
     df.drop('MiscFeature', axis=1, inplace=True)
     df['MasVnrArea'].fillna(0, inplace=True)
+    df['MasVnrType'].fillna('None', inplace=True)
 
     return df
 

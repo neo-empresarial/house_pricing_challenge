@@ -35,6 +35,10 @@ def feature_selection(df):
     df['KitchenQual'] = df['KitchenQual'].apply(int)
 
     # Create new features
+    df['HasPool'] = df['PoolArea'].apply(lambda x: 1 if x>0 else 0)
+    df['HasFirePlace'] = df['Fireplaces'].apply(lambda x: 1 if x!='0' else 0)
+    df['HasPavedDrive'] = df['PavedDrive'].apply(lambda x: 1 if x=='Yes' else 0)
+    df['HasBsmt'] = df['TotalBsmtSF'].apply(lambda x: 1 if x>0 else 0)
     df['PorchArea'] = df[[
         'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', '3SsnPorch',
         'ScreenPorch'
@@ -54,12 +58,12 @@ def feature_selection(df):
         'Fireplaces', 'PoolArea', 'PavedDrive', 'GarageType', 'GarageQual',
         'GarageYrBlt', 'GarageFinish', 'GarageCond', 'GarageArea',
         'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', '3SsnPorch',
-        'ScreenPorch', 'FireplaceQu', 'PoolQC',
-        'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinSF1',
+        'ScreenPorch', 'FireplaceQu', 'PoolQC', 'LotFrontage', 'LotConfig',
+        'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinSF1', 'LandSlope',
         'BsmtFinType2', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF',
-        'RoofStyle', 'Exterior1st', 'Exterior2nd',
+        'RoofStyle', 'Exterior1st', 'Exterior2nd', 'LotShape', 'LandContour',
         'BldgType', 'Functional', 'MoSold', 'MiscVal', 'LowQualFinSF',
-        'KitchenAbvGr'
+        'KitchenAbvGr', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath', 'HalfBath'
     ],
         inplace=True)
 
