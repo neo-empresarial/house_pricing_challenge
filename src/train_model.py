@@ -1,7 +1,6 @@
 from clean import clean
 from feature_selection import feature_selection
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.impute import SimpleImputer
 import joblib
 import numpy as np
 import pandas as pd
@@ -35,4 +34,4 @@ if __name__ == "__main__":
     df = clean(df)
     df = feature_selection(df)
     model = train_model(df)
-    joblib.dump(model, '../models/2-gradient-boosting.sav'')
+    joblib.dump(model, '../models/2-gradient-boosting.sav')
