@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+from scipy import stats
 import os
 import sys
 
@@ -73,11 +75,11 @@ def clean_mix(df, test=False):
 
 
 def clean_outliers(df):
-    df = df.drop(df[(df['GrLivArea'] > 4000) &
-                    (df['SalePrice'] < 200000)].index)
-    df = df[df['LotArea'] < 100000]
-    df = df[df['LotFrontage'] < 200]
-
+    z = np.abs(stats.zscore(df['SalePrice']))
+    threshold = 3
+    outliers = np.where(z > threshold)
+    zscore_outliers = outliers[0]
+    df.drop(zscore_outliers)
     return df
 
 
